@@ -29,17 +29,17 @@ function App() {
 
       <section className="popup-section popup-section_type_edit">
         <div className="form-popup form-popup_type_edit">
-          <form id="edit-form" className="form form_type_edit" action="#" name="editForm" autocomplete="off" novalidate>
+          <form id="edit-form" className="form form_type_edit" action="#" name="editForm" autoComplete="off" noValidate>
             <fieldset className="form__fieldset">
               <h2 className="form__title">Edit profile</h2>
               <label className="form__field">
                 <input id="profile-name-input" type="text" placeholder="Name" name="name" required className="form__input"
-                  minlength="2" maxlength="40" />
+                  minLength="2" maxLength="40" />
                 <span className="form__error profile-name-input-error">Here be error message.</span>
               </label>
               <label className="form__field">
                 <input id="profile-job-input" type="text" placeholder="Job" name="job" required className="form__input"
-                  minlength="2" maxlength="400" />
+                  minLength="2" maxLength="400" />
                 <span className="form__error profile-job-input-error">Here be error message.</span>
               </label>
             </fieldset>
@@ -51,12 +51,12 @@ function App() {
 
       <section className="popup-section popup-section_type_add">
         <div className="form-popup form-popup_type_add">
-          <form id="add-form" className="form form_type_add" action="#" autocomplete="off" name="addForm" novalidate>
+          <form id="add-form" className="form form_type_add" action="#" autoComplete="off" name="addForm" noValidate>
             <fieldset className="form__fieldset">
               <h2 className="form__title">New place</h2>
               <label className="form__field">
                 <input id="place-title-input" type="text" placeholder="Title" name="title" required
-                  className="form__input form__input_type_place-title" minlength="1" maxlength="30" />
+                  className="form__input form__input_type_place-title" minLength="1" maxLength="30" />
                 <span className="form__error place-title-input-error">Here be error message.</span>
               </label>
               <label className="form__field">
@@ -73,7 +73,7 @@ function App() {
 
       <section className="popup-section popup-section_type_change-avatar">
         <div className="form-popup form-popup_type_avatar">
-          <form id="avatar-form" className="form form_type_avatar" action="#" autocomplete="off" name="changeAvatarForm" novalidate>
+          <form id="avatar-form" className="form form_type_avatar" action="#" autoComplete="off" name="changeAvatarForm" noValidate>
             <fieldset className="form__fieldset">
               <h2 className="form__title">Change profile picture</h2>
               <label className="form__field">
