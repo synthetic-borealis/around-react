@@ -1,0 +1,19 @@
+@media screen and (max-width: 800px) {
+  .close-button_type_image-popup {
+    width: 40px;
+    height: 40px;
+    top: -40px;
+    right: -40px;
+    background-size: auto;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .close-button_type_image-popup {
+    width: 42px;
+    height: 42px;
+    top: -36px;
+    right: -36px;
+    background-size: contain;
+  }
+}

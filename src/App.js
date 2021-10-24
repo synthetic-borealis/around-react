@@ -1,11 +1,11 @@
-import './App.css';
+import logoImage from './images/logo.svg';
 
 function App() {
   return (
-    <div className="App">
+    <div className="page-container">
       <header className="header">
         <div className="header__container">
-          <img className="logo" src="<%= require('./images/logo.svg')%>" alt="Around the U.S." />
+          <img className="logo" src={logoImage} alt="Around the U.S." />
         </div>
       </header>
       <main>
