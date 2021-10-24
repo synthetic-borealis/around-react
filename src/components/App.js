@@ -1,13 +1,10 @@
-import logoImage from './images/logo.svg';
+import Header from "./Header";
+import Footer from "./Footer";
 
 function App() {
   return (
     <div className="page-container">
-      <header className="header">
-        <div className="header__container">
-          <img className="logo" src={logoImage} alt="Around the U.S." />
-        </div>
-      </header>
+      <Header />
       <main>
         <section className="profile">
           <div className="profile__avatar-container">
@@ -28,9 +25,7 @@ function App() {
         </section>
       </main>
 
-      <footer className="footer">
-        <p className="footer__copyright">© 2021 Around The U.S.</p>
-      </footer>
+      <Footer />
 
       <section className="popup-section popup-section_type_edit">
         <div className="form-popup form-popup_type_edit">
