@@ -10,7 +10,7 @@ function PopupWithForm(props) {
     <section className={sectionClassName}>
       <div className={formPopupClassName}>
         {props.children}
-        <button className="close-button" type="button" aria-label="Close"></button>
+        <button className="close-button" type="button" aria-label="Close" onClick={props.onClose}></button>
       </div>
     </section>
   );

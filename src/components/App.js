@@ -25,6 +25,12 @@ function App() {
     popup.classList.add(popupClassList.openedPopup);
   }
 
+  function closeAllPopups() {
+    setIsEditProfileOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+  }
+
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
   }
@@ -53,7 +59,7 @@ function App() {
       />
       <Footer />
 
-      <PopupWithForm name="edit" isOpen={isEditProfilePopupOpen}>
+      <PopupWithForm name="edit" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
         <form id="edit-form" className="form form_type_edit" action="#" name="editForm" autoComplete="off" noValidate>
           <fieldset className="form__fieldset">
             <h2 className="form__title">Edit profile</h2>
@@ -72,7 +78,7 @@ function App() {
         </form>
       </PopupWithForm>
 
-      <PopupWithForm name="add" isOpen={isAddPlacePopupOpen}>
+      <PopupWithForm name="add" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
         <form id="add-form" className="form form_type_add" action="#" autoComplete="off" name="addForm" noValidate>
           <fieldset className="form__fieldset">
             <h2 className="form__title">New place</h2>
@@ -91,7 +97,7 @@ function App() {
         </form>
       </PopupWithForm>
 
-      <PopupWithForm name="change-avatar" isOpen={isEditAvatarPopupOpen}>
+      <PopupWithForm name="change-avatar" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
         <form id="avatar-form" className="form form_type_change-avatar" action="#" autoComplete="off" name="changeAvatarForm" noValidate>
           <fieldset className="form__fieldset">
             <h2 className="form__title">Change profile picture</h2>
@@ -105,7 +111,7 @@ function App() {
         </form>
       </PopupWithForm>
 
-      <PopupWithForm name="confirm">
+      <PopupWithForm name="confirm" onClose={closeAllPopups}>
         <div className="form">
           <h2 className="form__title form__title_gap-size_small">Are you sure?</h2>
           <button className="form__submit-btn">Yes</button>
