@@ -1,4 +1,4 @@
-import Api from '../components/Api';
+import Api from './classes/Api';
 import { apiOptions } from './constants';
 
 const api = new Api(apiOptions);
