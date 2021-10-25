@@ -2,12 +2,14 @@
 import Header from "./Header";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
+import ImagePopup from "./ImagePopup";
 
 // Constants
 import {
   changeAvatarContainerSelector,
   editContainerSelector,
   addContainerSelector,
+  imagePopupContainerSelector,
   popupClassList
 } from '../utils/constants';
 
@@ -113,13 +115,7 @@ function App() {
         </div>
       </PopupWithForm>
 
-      <section className="popup-section popup-section_type_image">
-        <div className="image-popup">
-          <img className="image-popup__image" src="#" alt="PLACEHOLDER" />
-          <p className="image-popup__caption"></p>
-          <button className="close-button close-button_type_image-popup" type="button"></button>
-        </div>
-      </section>
+      <ImagePopup />
     </div>
   );
 }
