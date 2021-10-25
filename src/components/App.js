@@ -1,7 +1,33 @@
+// Components
 import Header from "./Header";
 import Footer from "./Footer";
 
+// Constants
+import {
+  changeAvatarContainerSelector,
+  editContainerSelector,
+  addContainerSelector,
+  popupClassList
+} from '../utils/constants';
+
 function App() {
+  function openPopup(popupSelector) {
+    const popup = document.querySelector(popupSelector);
+    popup.classList.add(popupClassList.openedPopup);
+  }
+
+  function handleEditAvatarClick() {
+    openPopup(changeAvatarContainerSelector);
+  }
+
+  function handleEditProfileClick() {
+    openPopup(editContainerSelector);
+  }
+
+  function handleAddPlaceClick() {
+    openPopup(addContainerSelector);
+  }
+
   return (
     <div className="page-container">
       <Header />
@@ -9,16 +35,16 @@ function App() {
         <section className="profile">
           <div className="profile__avatar-container">
             <div className="profile__avatar"></div>
-            <button className="profile__avatar-button" id="btn-change-avatar"></button>
+            <button className="profile__avatar-button" onClick={handleEditAvatarClick}></button>
           </div>
           <div className="profile__info">
             <div className="profile__header">
               <h1 className="profile__name">Jacques Cousteau</h1>
-              <button className="profile__edit-button" type="button" aria-label="Edit"></button>
+              <button className="profile__edit-button" type="button" aria-label="Edit" onClick={handleEditProfileClick}></button>
             </div>
             <p className="profile__job">Explorer</p>
           </div>
-          <button className="add-button" type="button" aria-label="Add"></button>
+          <button className="add-button" type="button" aria-label="Add" onClick={handleAddPlaceClick}></button>
         </section>
 
         <section className="places">
