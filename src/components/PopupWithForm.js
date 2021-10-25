@@ -1,7 +1,9 @@
 import { popupClassList as popupClasses } from '../utils/constants';
 
 function PopupWithForm(props) {
-  const sectionClassName = `${popupClasses.popupClass} ${popupClasses.popupTypeClassPrefix}${props.name}`;
+  const sectionClassName = `${popupClasses.popupClass} ${
+    popupClasses.popupTypeClassPrefix
+  }${props.name} ${props.isOpen ? popupClasses.openedPopup : ""}`;
   const formPopupClassName = `${popupClasses.formPopupClass} ${popupClasses.formPopupTypePrefix}${props.name}`;
 
   return (

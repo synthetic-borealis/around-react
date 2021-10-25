@@ -13,32 +13,47 @@ import {
   imagePopupContainerSelector,
   popupClassList
 } from '../utils/constants';
+import React from "react";
 
 function App() {
+  const [isEditProfilePopupOpen, setIsEditProfileOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+
   function openPopup(popupSelector) {
     const popup = document.querySelector(popupSelector);
     popup.classList.add(popupClassList.openedPopup);
   }
 
   function handleEditAvatarClick() {
-    openPopup(changeAvatarContainerSelector);
+    setIsEditAvatarPopupOpen(true);
   }
 
   function handleEditProfileClick() {
-    openPopup(editContainerSelector);
+    setIsEditProfileOpen(true);
   }
 
   function handleAddPlaceClick() {
-    openPopup(addContainerSelector);
+    setIsAddPlacePopupOpen(true);
+  }
+
+  function handleCardClick() {
+    // TODO update image popup content
+    openPopup(imagePopupContainerSelector);
   }
 
   return (
     <div className="page-container">
       <Header />
-      <Main />
+      <Main
+        onEditProfileClick={handleEditProfileClick}
+        onEditAvatarClick={handleEditAvatarClick}
+        onAddPlaceClick={handleAddPlaceClick}
+        onCardClick={handleCardClick}
+      />
       <Footer />
 
-      <PopupWithForm name="edit">
+      <PopupWithForm name="edit" isOpen={isEditProfilePopupOpen}>
         <form id="edit-form" className="form form_type_edit" action="#" name="editForm" autoComplete="off" noValidate>
           <fieldset className="form__fieldset">
             <h2 className="form__title">Edit profile</h2>
@@ -57,7 +72,7 @@ function App() {
         </form>
       </PopupWithForm>
 
-      <PopupWithForm name="add">
+      <PopupWithForm name="add" isOpen={isAddPlacePopupOpen}>
         <form id="add-form" className="form form_type_add" action="#" autoComplete="off" name="addForm" noValidate>
           <fieldset className="form__fieldset">
             <h2 className="form__title">New place</h2>
@@ -76,7 +91,7 @@ function App() {
         </form>
       </PopupWithForm>
 
-      <PopupWithForm name="change-avatar">
+      <PopupWithForm name="change-avatar" isOpen={isEditAvatarPopupOpen}>
         <form id="avatar-form" className="form form_type_change-avatar" action="#" autoComplete="off" name="changeAvatarForm" noValidate>
           <fieldset className="form__fieldset">
             <h2 className="form__title">Change profile picture</h2>
