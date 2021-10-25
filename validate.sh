@@ -24,5 +24,5 @@
 ##################################################################################
 
 # Modify VALIDATION_INPUT according to your needs
-export VALIDATION_INPUT="./src/index.html ./src/pages ./src/blocks"
+export VALIDATION_INPUT="./src"
 vnu --also-check-css --skip-non-html --format json --stdout $VALIDATION_INPUT > validation-log.json
