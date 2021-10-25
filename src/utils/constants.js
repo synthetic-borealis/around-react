@@ -15,7 +15,11 @@ const popupClassList = {
   openedPopup: 'popup-section_opened',
   closeButton: 'close-button',
   imageSelector: '.image-popup__image',
-  imageCaptionSelector: '.image-popup__caption'
+  imageCaptionSelector: '.image-popup__caption',
+  popupClass: 'popup-section',
+  popupTypeClassPrefix: 'popup-section_type_',
+  formPopupClass: 'form-popup',
+  formPopupTypePrefix: 'form-popup_type_'
 };
 
 // Card Classes
