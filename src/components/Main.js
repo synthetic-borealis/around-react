@@ -5,13 +5,18 @@ function Main(props) {
   const [userName, setUserName] = React.useState('Jacques Cousteau');
   const [userDescription, setUserDescription] = React.useState('Explorer');
   const [userAvatar, setUserAvatar] = React.useState('');
+  const [cards, setCards] = React.useState([]);
 
-  api.getRemoteData().then(([userData, initialCardData]) => {
-    setUserName(userData.name);
-    setUserDescription(userData.about);
-    setUserAvatar(userData.avatar);
-  })
-  .catch(console.log);
+  // Ensure API request for information is only made once
+  React.useEffect(() => {
+    api.getRemoteData().then(([userData, initialCards]) => {
+      setUserName(userData.name);
+      setUserDescription(userData.about);
+      setUserAvatar(userData.avatar);
+      setCards(...initialCards);
+    })
+    .catch(console.log);
+  }, []);
 
   return (
     <main>
