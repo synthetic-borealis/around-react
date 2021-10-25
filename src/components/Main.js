@@ -1,6 +1,8 @@
 import React from 'react';
 import api from '../utils/api';
 
+import Card from './Card';
+
 function Main(props) {
   const [userName, setUserName] = React.useState('Jacques Cousteau');
   const [userDescription, setUserDescription] = React.useState('Explorer');
@@ -13,7 +15,7 @@ function Main(props) {
       setUserName(userData.name);
       setUserDescription(userData.about);
       setUserAvatar(userData.avatar);
-      setCards(...initialCards);
+      setCards([...initialCards]);
     })
     .catch(console.log);
   }, []);
@@ -36,6 +38,7 @@ function Main(props) {
       </section>
 
       <section className="places">
+        { cards.map((card, i) => ((<Card key={i} card={card}/>))) }
       </section>
     </main>
   );
