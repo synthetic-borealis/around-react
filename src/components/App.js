@@ -58,64 +58,42 @@ function App() {
       />
       <Footer />
 
-      <PopupWithForm name="edit" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
-        <form id="edit-form" className="form form_type_edit" action="#" name="editForm" autoComplete="off" noValidate>
-          <fieldset className="form__fieldset">
-            <h2 className="form__title">Edit profile</h2>
-            <label className="form__field">
-              <input id="profile-name-input" type="text" placeholder="Name" name="name" required className="form__input"
-                minLength="2" maxLength="40" />
-              <span className="form__error profile-name-input-error">Here be error message.</span>
-            </label>
-            <label className="form__field">
-              <input id="profile-job-input" type="text" placeholder="Job" name="job" required className="form__input"
-                minLength="2" maxLength="400" />
-              <span className="form__error profile-job-input-error">Here be error message.</span>
-            </label>
-          </fieldset>
-          <button type="submit" className="form__submit-btn" id="btn-profile-save">Save</button>
-        </form>
+      <PopupWithForm name="edit" title="Edit profile" buttonCaption="Save" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
+        <label className="form__field">
+          <input id="profile-name-input" type="text" placeholder="Name" name="name" required className="form__input"
+            minLength="2" maxLength="40" />
+          <span className="form__error profile-name-input-error">Here be error message.</span>
+        </label>
+        <label className="form__field">
+          <input id="profile-job-input" type="text" placeholder="Job" name="job" required className="form__input"
+            minLength="2" maxLength="400" />
+          <span className="form__error profile-job-input-error">Here be error message.</span>
+        </label>
       </PopupWithForm>
 
-      <PopupWithForm name="add" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
-        <form id="add-form" className="form form_type_add" action="#" autoComplete="off" name="addForm" noValidate>
-          <fieldset className="form__fieldset">
-            <h2 className="form__title">New place</h2>
-            <label className="form__field">
-              <input id="place-title-input" type="text" placeholder="Title" name="title" required
-                className="form__input form__input_type_place-title" minLength="1" maxLength="30" />
-              <span className="form__error place-title-input-error">Here be error message.</span>
-            </label>
-            <label className="form__field">
-              <input id="place-link-input" type="url" placeholder="Image Link" name="link" required
-                className="form__input form__input_type_place-link" />
-              <span className="form__error place-link-input-error">Here be error message.</span>
-            </label>
-          </fieldset>
-          <button type="submit" className="form__submit-btn" id="btn-add-submit">Create</button>
-        </form>
+      <PopupWithForm name="add" title="New place" buttonCaption="Create" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
+        <label className="form__field">
+          <input id="place-title-input" type="text" placeholder="Title" name="title" required
+            className="form__input form__input_type_place-title" minLength="1" maxLength="30" />
+          <span className="form__error place-title-input-error">Here be error message.</span>
+        </label>
+        <label className="form__field">
+          <input id="place-link-input" type="url" placeholder="Image Link" name="link" required
+            className="form__input form__input_type_place-link" />
+          <span className="form__error place-link-input-error">Here be error message.</span>
+        </label>
       </PopupWithForm>
 
-      <PopupWithForm name="change-avatar" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
-        <form id="avatar-form" className="form form_type_change-avatar" action="#" autoComplete="off" name="changeAvatarForm" noValidate>
-          <fieldset className="form__fieldset">
-            <h2 className="form__title">Change profile picture</h2>
-            <label className="form__field">
-              <input id="profile-avatar-input" type="url" placeholder="Image Link" name="avatar" required
-                className="form__input form__input_type_avatar-link" />
-              <span className="form__error profile-avatar-input-error">Here be error message.</span>
-            </label>
-          </fieldset>
-          <button type="submit" className="form__submit-btn form__submit-btn_type_avatar" id="btn-save-avatar">Save</button>
-        </form>
+      <PopupWithForm name="change-avatar" title="Change profile picture" buttonCaption="Save"
+        isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
+        <label className="form__field">
+          <input id="profile-avatar-input" type="url" placeholder="Image Link" name="avatar" required
+            className="form__input form__input_type_avatar-link" />
+          <span className="form__error profile-avatar-input-error">Here be error message.</span>
+        </label>
       </PopupWithForm>
 
-      <PopupWithForm name="confirm" onClose={closeAllPopups}>
-        <div className="form">
-          <h2 className="form__title form__title_gap-size_small">Are you sure?</h2>
-          <button className="form__submit-btn">Yes</button>
-        </div>
-      </PopupWithForm>
+      <PopupWithForm name="confirm" title="Are you sure?" buttonCaption="Yes" onClose={closeAllPopups} />
 
       <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups} />
     </div>

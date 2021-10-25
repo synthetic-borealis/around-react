@@ -1,6 +1,8 @@
 // Form Classes
 const formClassList = {
   formSelector: '.form',
+  formClass: 'form',
+  formTypeClassPrefix: 'form_type_',
   inputSelector: '.form__input',
   submitButtonSelector: '.form__submit-btn',
   fieldsetSelector: '.form__fieldset',
