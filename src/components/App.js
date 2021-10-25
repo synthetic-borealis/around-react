@@ -7,28 +7,27 @@ import ImagePopup from "./ImagePopup";
 
 // Constants
 import {
-  changeAvatarContainerSelector,
-  editContainerSelector,
-  addContainerSelector,
-  imagePopupContainerSelector,
-  popupClassList
+  popupTransitionDuration,
 } from '../utils/constants';
 import React from "react";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfileOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-
-  function openPopup(popupSelector) {
-    const popup = document.querySelector(popupSelector);
-    popup.classList.add(popupClassList.openedPopup);
-  }
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
+    React.useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState({});
 
   function closeAllPopups() {
     setIsEditProfileOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setIsImagePopupOpen(false);
+    // Ensure visitors don't notice the image popup resetting
+    setTimeout(() => {
+      setSelectedCard({});
+    }, popupTransitionDuration);
   }
 
   function handleEditAvatarClick() {
@@ -43,9 +42,9 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
-  function handleCardClick() {
-    // TODO update image popup content
-    openPopup(imagePopupContainerSelector);
+  function handleCardClick(card) {
+    setSelectedCard(card);
+    setIsImagePopupOpen(true);
   }
 
   return (
@@ -118,7 +117,7 @@ function App() {
         </div>
       </PopupWithForm>
 
-      <ImagePopup />
+      <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups} />
     </div>
   );
 }

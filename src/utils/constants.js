@@ -58,6 +58,9 @@ const profileAvatarSelector = '.profile__avatar';
 // Template Selectors
 const cardTemplateSelector = '#card-template';
 
+// Misc. Values
+const popupTransitionDuration = 500;
+
 export {
   formClassList,
   popupClassList,
@@ -72,5 +75,6 @@ export {
   profileNameSelector,
   profileJobSelector,
   profileAvatarSelector,
-  cardTemplateSelector
+  cardTemplateSelector,
+  popupTransitionDuration
 };
