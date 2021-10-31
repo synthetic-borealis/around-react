@@ -38,7 +38,7 @@ function Main(props) {
       </section>
 
       <section className="places">
-        { cards.map(card => ((<Card key={card["_id"]} card={card} onCardClick={props.onCardClick}/>))) }
+        { cards.reverse().map(card => ((<Card key={card["_id"]} card={card} onCardClick={props.onCardClick}/>))) }
       </section>
     </main>
   );
