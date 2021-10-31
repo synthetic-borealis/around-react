@@ -6,9 +6,6 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Card from './Card';
 
 function Main(props) {
-  const [userName, setUserName] = React.useState('Jacques Cousteau');
-  const [userDescription, setUserDescription] = React.useState('Explorer');
-  const [userAvatar, setUserAvatar] = React.useState('');
   const [cards, setCards] = React.useState([]);
 
   const currentUser = React.useContext(CurrentUserContext);
