@@ -51,6 +51,7 @@
 @import url("./blocks/card/__like-button/_active/card__like-button_active.css");
 @import url("./blocks/card/__like-counter/card__like-counter.css");
 @import url("./blocks/card/__delete-button/card__delete-button.css");
+@import url("./blocks/card/__delete-button/_hidden/card__delete-button_hidden.css");
 @import url("./blocks/image-popup/image-popup.css");
 @import url("./blocks/image-popup/__image/image-popup__image.css");
 @import url("./blocks/image-popup/__caption/image-popup__caption.css");
