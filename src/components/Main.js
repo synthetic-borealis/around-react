@@ -20,7 +20,7 @@ function Main(props) {
 
   // Ensure API request for user information is only made once
   React.useEffect(() => {
-    api.getInitialCards().then((initialCards) => setCards([...initialCards])).catch(console.log);
+    api.getInitialCards().then((initialCards) => setCards([...initialCards.reverse()])).catch(console.log);
   }, []);
 
   return (
@@ -41,7 +41,7 @@ function Main(props) {
       </section>
 
       <section className="places">
-        { cards.reverse().map(card => ((<Card key={card["_id"]} card={card} onCardClick={props.onCardClick} onCardLike={handleCardLike}/>))) }
+        { cards.map(card => ((<Card key={card["_id"]} card={card} onCardClick={props.onCardClick} onCardLike={handleCardLike}/>))) }
       </section>
     </main>
   );
