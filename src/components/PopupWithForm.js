@@ -16,7 +16,7 @@ function PopupWithForm(props) {
   return (
     <section className={sectionClassName}>
       <div className={formPopupClassName}>
-        <form id={formName} className={formClassName} action="#" name={formName} autoComplete="off">
+        <form id={formName} className={formClassName} action="#" name={formName} autoComplete="off" onSubmit={props.onSubmit}>
           <fieldset className="form__fieldset">
             <h2 className={formTitleClassName}>{props.title}</h2>
             {props.children}
