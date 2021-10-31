@@ -4,6 +4,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import EditProfilePopup from "./EditProfilePopup";
 
 // Contexts
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -56,6 +57,13 @@ function App() {
     setIsImagePopupOpen(true);
   }
 
+  function handleUpdateUser(user) {
+    api.updateUserInfo(user)
+      .then(setCurrentUser)
+      .finally(() => closeAllPopups())
+      .catch(console.log);
+  }
+
   // Ensure API request for card data is only made once
   React.useEffect(() => {
     api.getUserData().then(setCurrentUser).catch(console.log);
@@ -73,18 +81,7 @@ function App() {
         />
         <Footer />
 
-        <PopupWithForm name="edit" title="Edit profile" buttonCaption="Save" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
-          <label className="form__field">
-            <input id="profile-name-input" type="text" placeholder="Name" name="name" required className="form__input"
-              minLength="2" maxLength="40" />
-            <span className="form__error profile-name-input-error">Here be error message.</span>
-          </label>
-          <label className="form__field">
-            <input id="profile-job-input" type="text" placeholder="Job" name="job" required className="form__input"
-              minLength="2" maxLength="400" />
-            <span className="form__error profile-job-input-error">Here be error message.</span>
-          </label>
-        </PopupWithForm>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUserUpdate={handleUpdateUser}/>
 
         <PopupWithForm name="add" title="New place" buttonCaption="Create" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
           <label className="form__field">

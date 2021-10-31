@@ -15,13 +15,13 @@ class Api {
       .then(this._handleResponse);
   }
 
-  updateUserInfo(userName, userAbout) {
+  updateUserInfo({name, about}) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        name: userName,
-        about: userAbout
+        name,
+        about
       })
     })
       .then(this._handleResponse);
