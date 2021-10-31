@@ -18,9 +18,15 @@ function Main(props) {
     })
   }
 
+  function handleCardDelete(card) {
+    api.removeCard(card._id).then(() => {
+      setCards((state) => state.filter((c) => c._id !== card._id));
+    });
+  }
+
   // Ensure API request for user information is only made once
   React.useEffect(() => {
-    api.getInitialCards().then((initialCards) => setCards([...initialCards.reverse()])).catch(console.log);
+    api.getInitialCards().then((initialCards) => setCards([...initialCards])).catch(console.log);
   }, []);
 
   return (
@@ -41,7 +47,7 @@ function Main(props) {
       </section>
 
       <section className="places">
-        { cards.map(card => ((<Card key={card["_id"]} card={card} onCardClick={props.onCardClick} onCardLike={handleCardLike}/>))) }
+        { cards.map(card => ((<Card key={card["_id"]} card={card} onCardClick={props.onCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>))) }
       </section>
     </main>
   );
