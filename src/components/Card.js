@@ -16,13 +16,17 @@ function Card(props) {
     props.onCardClick(props.card);
   }
 
+  function handleLikeClick() {
+    props.onCardLike(props.card);
+  }
+
   return (
     <article className="card">
       <button className="card__image" aria-label={props.card.name} style={{backgroundImage: cardImage}} onClick={handleClick}/>
       <div className="card__container">
         <h2 className="card__caption">{props.card.name}</h2>
         <div className="card__like-container">
-          <button className={cardLikeButtonClass} type="button" aria-label="Like"></button>
+          <button className={cardLikeButtonClass} onClick={handleLikeClick} type="button" aria-label="Like"></button>
           <p className="card__like-counter">{likes}</p>
         </div>
       </div>

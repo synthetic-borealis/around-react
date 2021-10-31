@@ -10,6 +10,14 @@ function Main(props) {
 
   const currentUser = React.useContext(CurrentUserContext);
 
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    api.changeLikeStatus(card._id, !isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    })
+  }
+
   // Ensure API request for user information is only made once
   React.useEffect(() => {
     api.getInitialCards().then((initialCards) => setCards([...initialCards])).catch(console.log);
@@ -33,7 +41,7 @@ function Main(props) {
       </section>
 
       <section className="places">
-        { cards.reverse().map(card => ((<Card key={card["_id"]} card={card} onCardClick={props.onCardClick}/>))) }
+        { cards.reverse().map(card => ((<Card key={card["_id"]} card={card} onCardClick={props.onCardClick} onCardLike={handleCardLike}/>))) }
       </section>
     </main>
   );
