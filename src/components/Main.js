@@ -1,6 +1,8 @@
 import React from 'react';
 import api from '../utils/api';
 
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+
 import Card from './Card';
 
 function Main(props) {
@@ -9,30 +11,26 @@ function Main(props) {
   const [userAvatar, setUserAvatar] = React.useState('');
   const [cards, setCards] = React.useState([]);
 
-  // Ensure API request for information is only made once
+  const currentUser = React.useContext(CurrentUserContext);
+
+  // Ensure API request for user information is only made once
   React.useEffect(() => {
-    api.getRemoteData().then(([userData, initialCards]) => {
-      setUserName(userData.name);
-      setUserDescription(userData.about);
-      setUserAvatar(userData.avatar);
-      setCards([...initialCards]);
-    })
-    .catch(console.log);
+    api.getInitialCards().then((initialCards) => setCards([...initialCards])).catch(console.log);
   }, []);
 
   return (
     <main>
       <section className="profile">
         <div className="profile__avatar-container">
-          <div className="profile__avatar" style={{ backgroundImage: `url(${userAvatar})` }}></div>
+          <div className="profile__avatar" style={{ backgroundImage: `url(${currentUser.avatar})` }}></div>
           <button className="profile__avatar-button" onClick={props.onEditAvatarClick}></button>
         </div>
         <div className="profile__info">
           <div className="profile__header">
-            <h1 className="profile__name">{userName}</h1>
+            <h1 className="profile__name">{currentUser.name}</h1>
             <button className="profile__edit-button" type="button" aria-label="Edit" onClick={props.onEditProfileClick}></button>
           </div>
-          <p className="profile__job">{userDescription}</p>
+          <p className="profile__job">{currentUser.about}</p>
         </div>
         <button className="add-button" type="button" aria-label="Add" onClick={props.onAddPlaceClick}></button>
       </section>

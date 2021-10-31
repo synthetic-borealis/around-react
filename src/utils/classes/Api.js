@@ -79,10 +79,6 @@ class Api {
     })
     .then(this._handleResponse);
   }
-
-  getRemoteData() {
-    return Promise.all([ this.getUserData(), this.getInitialCards() ]);
-  }
 }
 
 export default Api;
