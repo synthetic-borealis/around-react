@@ -62,15 +62,19 @@ function App() {
 
   function handleUpdateUser(user) {
     api.updateUserInfo(user)
-      .then(setCurrentUser)
-      .finally(() => closeAllPopups())
-      .catch(console.log);
+    .then((userData) => {
+      setCurrentUser(userData);
+      closeAllPopups();
+    })
+    .catch(console.log);
   }
 
   function handleUpdateAvatar({avatar}) {
     api.updateUserAvatar(avatar)
-      .then(setCurrentUser)
-      .finally(() => closeAllPopups())
+      .then((userData) => {
+        setCurrentUser(userData);
+        closeAllPopups();
+      })
       .catch(console.log);
   }
 
@@ -85,15 +89,18 @@ function App() {
 
   function handleAddPlaceSubmit(card) {
     api.addCard(card)
-      .then((newCard) => setCards([newCard, ...cards]))
-      .finally(() => closeAllPopups())
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
       .catch(console.log);
   }
 
   function handleCardDelete(card) {
     api.removeCard(card._id).then(() => {
       setCards((state) => state.filter((c) => c._id !== card._id));
-    });
+    })
+    .catch(console.log);
   }
 
   // Ensure API request for user information & cards data is only made once
