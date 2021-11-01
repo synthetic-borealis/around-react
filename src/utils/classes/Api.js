@@ -15,13 +15,13 @@ class Api {
       .then(this._handleResponse);
   }
 
-  updateUserInfo(userName, userAbout) {
+  updateUserInfo({name, about}) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        name: userName,
-        about: userAbout
+        name,
+        about
       })
     })
       .then(this._handleResponse);
@@ -45,43 +45,31 @@ class Api {
       .then(this._handleResponse);
   }
 
-  likeCard = (cardId) => {
+  changeLikeStatus(cardId, isLiked) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: "PUT",
+      method: `${isLiked ? "PUT" : "DELETE"}`,
       headers: this._headers,
     })
       .then(this._handleResponse);
-  };
+  }
 
-  unlikeCard = (cardId) => {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: "DELETE",
-      headers: this._headers,
-    })
-      .then(this._handleResponse);
-  };
-
-  addCard = (cardName, cardLink) => {
+  addCard({name, link}) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
-        name: cardName,
-        link: cardLink})
+        name,
+        link})
     })
     .then(this._handleResponse);
   }
 
-  removeCard = (cardId) => {
+  removeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers
     })
     .then(this._handleResponse);
-  }
-
-  getRemoteData() {
-    return Promise.all([ this.getUserData(), this.getInitialCards() ]);
   }
 }
 

@@ -4,14 +4,27 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
+
+// Contexts
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
+// Misc. Utils
+import api from "../utils/api";
 
 // Constants
 import {
   popupTransitionDuration,
 } from '../utils/constants';
+
 import React from "react";
 
 function App() {
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [cards, setCards] = React.useState([]);
+
   const [isEditProfilePopupOpen, setIsEditProfileOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
@@ -47,56 +60,73 @@ function App() {
     setIsImagePopupOpen(true);
   }
 
+  function handleUpdateUser(user) {
+    api.updateUserInfo(user)
+      .then(setCurrentUser)
+      .finally(() => closeAllPopups())
+      .catch(console.log);
+  }
+
+  function handleUpdateAvatar({avatar}) {
+    api.updateUserAvatar(avatar)
+      .then(setCurrentUser)
+      .finally(() => closeAllPopups())
+      .catch(console.log);
+  }
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    api.changeLikeStatus(card._id, !isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    })
+    .catch(console.log);
+  }
+
+  function handleAddPlaceSubmit(card) {
+    api.addCard(card)
+      .then((newCard) => setCards([newCard, ...cards]))
+      .catch(console.log);
+  }
+
+  function handleCardDelete(card) {
+    api.removeCard(card._id).then(() => {
+      setCards((state) => state.filter((c) => c._id !== card._id));
+    });
+  }
+
+  // Ensure API request for user information & cards data is only made once
+  React.useEffect(() => {
+    api.getInitialCards().then((initialCards) => setCards([...initialCards])).catch(console.log);
+    api.getUserData().then(setCurrentUser).catch(console.log);
+  }, []);
+
   return (
-    <div className="page-container">
-      <Header />
-      <Main
-        onEditProfileClick={handleEditProfileClick}
-        onEditAvatarClick={handleEditAvatarClick}
-        onAddPlaceClick={handleAddPlaceClick}
-        onCardClick={handleCardClick}
-      />
-      <Footer />
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="page-container">
+        <Header />
+        <Main
+          onEditProfileClick={handleEditProfileClick}
+          onEditAvatarClick={handleEditAvatarClick}
+          onAddPlaceClick={handleAddPlaceClick}
+          cards={cards}
+          onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
+        />
+        <Footer />
 
-      <PopupWithForm name="edit" title="Edit profile" buttonCaption="Save" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
-        <label className="form__field">
-          <input id="profile-name-input" type="text" placeholder="Name" name="name" required className="form__input"
-            minLength="2" maxLength="40" />
-          <span className="form__error profile-name-input-error">Here be error message.</span>
-        </label>
-        <label className="form__field">
-          <input id="profile-job-input" type="text" placeholder="Job" name="job" required className="form__input"
-            minLength="2" maxLength="400" />
-          <span className="form__error profile-job-input-error">Here be error message.</span>
-        </label>
-      </PopupWithForm>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUserUpdate={handleUpdateUser} />
 
-      <PopupWithForm name="add" title="New place" buttonCaption="Create" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
-        <label className="form__field">
-          <input id="place-title-input" type="text" placeholder="Title" name="title" required
-            className="form__input form__input_type_place-title" minLength="1" maxLength="30" />
-          <span className="form__error place-title-input-error">Here be error message.</span>
-        </label>
-        <label className="form__field">
-          <input id="place-link-input" type="url" placeholder="Image Link" name="link" required
-            className="form__input form__input_type_place-link" />
-          <span className="form__error place-link-input-error">Here be error message.</span>
-        </label>
-      </PopupWithForm>
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlaceSubmit={handleAddPlaceSubmit} />
 
-      <PopupWithForm name="change-avatar" title="Change profile picture" buttonCaption="Save"
-        isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
-        <label className="form__field">
-          <input id="profile-avatar-input" type="url" placeholder="Image Link" name="avatar" required
-            className="form__input form__input_type_avatar-link" />
-          <span className="form__error profile-avatar-input-error">Here be error message.</span>
-        </label>
-      </PopupWithForm>
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
-      <PopupWithForm name="confirm" title="Are you sure?" buttonCaption="Yes" onClose={closeAllPopups} />
+        <PopupWithForm name="confirm" title="Are you sure?" buttonCaption="Yes" onClose={closeAllPopups} />
 
-      <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups} />
-    </div>
+        <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups} />
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 
