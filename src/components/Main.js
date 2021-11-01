@@ -1,33 +1,11 @@
 import React from 'react';
-import api from '../utils/api';
 
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 import Card from './Card';
 
 function Main(props) {
-  const [cards, setCards] = React.useState([]);
-
   const currentUser = React.useContext(CurrentUserContext);
-
-  function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
-
-    api.changeLikeStatus(card._id, !isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-    })
-  }
-
-  function handleCardDelete(card) {
-    api.removeCard(card._id).then(() => {
-      setCards((state) => state.filter((c) => c._id !== card._id));
-    });
-  }
-
-  // Ensure API request for user information is only made once
-  React.useEffect(() => {
-    api.getInitialCards().then((initialCards) => setCards([...initialCards])).catch(console.log);
-  }, []);
 
   return (
     <main>
@@ -47,7 +25,7 @@ function Main(props) {
       </section>
 
       <section className="places">
-        { cards.map(card => ((<Card key={card["_id"]} card={card} onCardClick={props.onCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>))) }
+        { props.cards.map(card => ((<Card key={card["_id"]} card={card} onCardClick={props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete}/>))) }
       </section>
     </main>
   );

@@ -6,6 +6,7 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 
 // Contexts
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -22,6 +23,7 @@ import React from "react";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
+  const [cards, setCards] = React.useState([]);
 
   const [isEditProfilePopupOpen, setIsEditProfileOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
@@ -72,8 +74,30 @@ function App() {
       .catch(console.log);
   }
 
-  // Ensure API request for card data is only made once
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    api.changeLikeStatus(card._id, !isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    })
+    .catch(console.log);
+  }
+
+  function handleAddPlaceSubmit(card) {
+    api.addCard(card)
+      .then((newCard) => setCards([newCard, ...cards]))
+      .catch(console.log);
+  }
+
+  function handleCardDelete(card) {
+    api.removeCard(card._id).then(() => {
+      setCards((state) => state.filter((c) => c._id !== card._id));
+    });
+  }
+
+  // Ensure API request for user information & cards data is only made once
   React.useEffect(() => {
+    api.getInitialCards().then((initialCards) => setCards([...initialCards])).catch(console.log);
     api.getUserData().then(setCurrentUser).catch(console.log);
   }, []);
 
@@ -85,24 +109,16 @@ function App() {
           onEditProfileClick={handleEditProfileClick}
           onEditAvatarClick={handleEditAvatarClick}
           onAddPlaceClick={handleAddPlaceClick}
+          cards={cards}
           onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
         <Footer />
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUserUpdate={handleUpdateUser}/>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUserUpdate={handleUpdateUser} />
 
-        <PopupWithForm name="add" title="New place" buttonCaption="Create" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
-          <label className="form__field">
-            <input id="place-title-input" type="text" placeholder="Title" name="title" required
-              className="form__input form__input_type_place-title" minLength="1" maxLength="30" />
-            <span className="form__error place-title-input-error">Here be error message.</span>
-          </label>
-          <label className="form__field">
-            <input id="place-link-input" type="url" placeholder="Image Link" name="link" required
-              className="form__input form__input_type_place-link" />
-            <span className="form__error place-link-input-error">Here be error message.</span>
-          </label>
-        </PopupWithForm>
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlaceSubmit={handleAddPlaceSubmit} />
 
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
