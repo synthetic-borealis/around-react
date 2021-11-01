@@ -22,6 +22,7 @@ import React from "react";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
+  const [cards, setCards] = React.useState([]);
 
   const [isEditProfilePopupOpen, setIsEditProfileOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
@@ -72,6 +73,25 @@ function App() {
       .catch(console.log);
   }
 
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    api.changeLikeStatus(card._id, !isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    })
+  }
+
+  function handleCardDelete(card) {
+    api.removeCard(card._id).then(() => {
+      setCards((state) => state.filter((c) => c._id !== card._id));
+    });
+  }
+
+  // Ensure API request for user information is only made once
+  React.useEffect(() => {
+    api.getInitialCards().then((initialCards) => setCards([...initialCards])).catch(console.log);
+  }, []);
+
   // Ensure API request for card data is only made once
   React.useEffect(() => {
     api.getUserData().then(setCurrentUser).catch(console.log);
@@ -85,7 +105,10 @@ function App() {
           onEditProfileClick={handleEditProfileClick}
           onEditAvatarClick={handleEditAvatarClick}
           onAddPlaceClick={handleAddPlaceClick}
+          cards={cards}
           onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
         <Footer />
 
