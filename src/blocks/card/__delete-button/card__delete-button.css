@@ -12,10 +12,10 @@
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
-  /* cursor: pointer; */
+  cursor: pointer;
   transition: opacity .25s linear;
 }
 
 .card__delete-button:hover {
-  opacity: .6;
+  opacity: 0.6;
 }
