@@ -6,6 +6,7 @@
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto;
   gap: 20px 17px;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 800px) {

@@ -3,7 +3,7 @@
 @import url("./fonts/inter/inter.css");
 
 /* Section non-specific styles */
-@import url("./blocks/page/page.css");
+@import url("./blocks/page-container/page-container.css");
 @import url("./blocks/logo/logo.css");
 @import url("./blocks/add-button/add-button.css");
 @import url("./blocks/popup-section/popup-section.css");
