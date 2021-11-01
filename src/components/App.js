@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 // Contexts
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -64,6 +65,13 @@ function App() {
       .catch(console.log);
   }
 
+  function handleUpdateAvatar({avatar}) {
+    api.updateUserAvatar(avatar)
+      .then(setCurrentUser)
+      .finally(() => closeAllPopups())
+      .catch(console.log);
+  }
+
   // Ensure API request for card data is only made once
   React.useEffect(() => {
     api.getUserData().then(setCurrentUser).catch(console.log);
@@ -96,14 +104,7 @@ function App() {
           </label>
         </PopupWithForm>
 
-        <PopupWithForm name="change-avatar" title="Change profile picture" buttonCaption="Save"
-          isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
-          <label className="form__field">
-            <input id="profile-avatar-input" type="url" placeholder="Image Link" name="avatar" required
-              className="form__input form__input_type_avatar-link" />
-            <span className="form__error profile-avatar-input-error">Here be error message.</span>
-          </label>
-        </PopupWithForm>
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
         <PopupWithForm name="confirm" title="Are you sure?" buttonCaption="Yes" onClose={closeAllPopups} />
 
