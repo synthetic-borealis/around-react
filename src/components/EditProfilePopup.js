@@ -34,12 +34,12 @@ function EditProfilePopup(props) {
       isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit}>
       <label className="form__field">
         <input id="profile-name-input" type="text" placeholder="Name" name="name" required className="form__input"
-          minLength="2" maxLength="40" onChange={handleNameChange} value={name} />
+          minLength="2" maxLength="40" onChange={handleNameChange} value={name || ''} />
         <span className="form__error profile-name-input-error">Here be error message.</span>
       </label>
       <label className="form__field">
         <input id="profile-job-input" type="text" placeholder="Job" name="about" required className="form__input"
-          minLength="2" maxLength="400" onChange={handleDescriptionChange} value={description} />
+          minLength="2" maxLength="400" onChange={handleDescriptionChange} value={description || ''} />
         <span className="form__error profile-job-input-error">Here be error message.</span>
       </label>
     </PopupWithForm>
